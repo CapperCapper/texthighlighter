@@ -23,21 +23,42 @@
             <ul>
                 <li>Select any text in the sandbox to highlight it.</li>
                 <li>Change highlighting color: <div class="color-picker"></div></li>
+                <li>If the color picker is not needed, for example, you only need yellow, then do not include the colour picker.</li>
                 <li>Remove all highlights: <button id="remove">Remove</button></li>
             </ul>
         </div>
 
         <div class="code shadow">
 <pre><code data-language="javascript">
-var hltr = new TextHighlighter(sandbox);
+(function () {
+    var removeBtn = document.getElementById('remove');
 
-colors.onColorChange(function (color) {
-    hltr.setColor(color);
-});
+    //sandbox is the container element  
+    var sandbox = document.getElementById('sandbox');
+    
+    /*the ColorPicker can take any number of colours
+    * set the colours with an array of strings.
+    */
+    var colors = new ColorPicker(
+        document.querySelector('.color-picker'), 
+        {
+        colors: [   "rgb(255, 255, 123)",
+                    "rgb(244, 67, 54)",
+                    "rgb(139, 195, 74)",
+                    "rgb(41, 182, 246)"]
 
-buttonRemove.onclick = function () {
-    hltr.removeHighlights();
-};
+        }
+    );
+    var hltr = new TextHighlighter(sandbox);
+
+    colors.onColorChange(function (color) {
+        hltr.setColor(color);
+    });
+
+    removeBtn.addEventListener('click', function () {
+        hltr.removeHighlights();
+    });
+})();
 </code></pre>
         </div>
 
@@ -150,7 +171,16 @@ buttonRemove.onclick = function () {
         (function () {
             var removeBtn = document.getElementById('remove');
             var sandbox = document.getElementById('sandbox');
-            var colors = new ColorPicker(document.querySelector('.color-picker'));
+            var colors = new ColorPicker(
+                document.querySelector('.color-picker'), 
+                {
+                colors: [   "rgb(255, 255, 123)",
+                            "rgb(244, 67, 54)",
+                            "rgb(139, 195, 74)",
+                            "rgb(41, 182, 246)"]
+      
+                }
+            );
             var hltr = new TextHighlighter(sandbox);
 
             colors.onColorChange(function (color) {

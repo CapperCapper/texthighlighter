@@ -1,53 +1,71 @@
-var ColorPicker = (function () {
-    'use strict';
+(function(window) {
+  "use strict";
 
-    var COLORS = [
-        '#FFFF7B',
-        '#F44336',
-        '#8BC34A',
-        '#29B6F6'
-    ];
-    var CLASS_SELECTED = 'selected';
-
-    function ColorPicker(el) {
-        var self = this;
-        this.color = COLORS[0];
-        this.selected = null;
-
-        COLORS.forEach(function (color) {
-            var div = document.createElement('div');
-            div.style.backgroundColor = color;
-
-            if (self.color === color) {
-                div.className = CLASS_SELECTED;
-                self.selected = div;
-            }
-
-            div.addEventListener('click', function () {
-                if (color !== self.color) {
-                    self.color = color;
-
-                    if (self.selected) {
-                        self.selected.className = '';
-                    }
-                    self.selected = div;
-                    self.selected.className = CLASS_SELECTED;
-
-                    if (typeof self.callback === 'function') {
-                        self.callback.call(self, color);
-                    }
-                }
-            }, false);
-
-            el.appendChild(div);
-        });
-
+  function extend(a, b) {
+    for (var key in b) {
+      if (b.hasOwnProperty(key)) {
+        a[key] = b[key];
+      }
     }
+    return a;
+  }
 
+  ColorPicker.prototype = {
+    defaults: {
+      colors: ["#FFFF7B"],
+      class_selected: "selected"
+    },
+    onColorChange: function(callback) {
+      this.callback = callback;
+    }
+  };
+  /*
+  @param {Object} - el - javascript dom element
+  @param {Object} - options 
+  @param {Array} - options.colors 
+  @param {string} - options.colors[0] 
+   */
 
-    ColorPicker.prototype.onColorChange = function (callback) {
-        this.callback = callback;
-    };
+  function ColorPicker(el, options) {
+    console.log(typeof el);
+    console.log(typeof options);
+    var self = this;
+    this.options = extend(this.defaults, options);
+    this.colors = this.options.colors;
+    this.color = this.options.colors[0];
+    this.selected = null;
+    this.colors.forEach(function(color) {
+      var div = document.createElement("div");
+      div.style.backgroundColor = color;
 
-    return ColorPicker;
-})();
+      if (self.color === color) {
+        div.className = self.options.class_selected;
+        self.selected = div;
+      }
+
+      div.addEventListener(
+        "click",
+        function() {
+          if (color !== self.color) {
+            self.color = color;
+
+            if (self.selected) {
+              self.selected.className = "";
+            }
+            self.selected = div;
+            self.selected.className = self.options.class_selected;
+
+            if (typeof self.callback === "function") {
+              self.callback.call(self, color);
+            }
+          }
+        },
+        false
+      );
+
+      el.appendChild(div);
+    });
+  }
+
+  window.ColorPicker = ColorPicker;
+})(window);

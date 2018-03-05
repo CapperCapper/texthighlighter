@@ -27,8 +27,6 @@
    */
 
   function ColorPicker(el, options) {
-    console.log(typeof el);
-    console.log(typeof options);
     var self = this;
     this.options = extend(this.defaults, options);
     this.colors = this.options.colors;

@@ -6,17 +6,18 @@ TextHighlighter allows you to highlight text on web pages. Just select it!
 
 ## Getting started
 
-Download TextHighlighter directly from GitHub or install with Bower:
-
-```
-$ bower install text-highlighter
-```
-
 Add script file to head section of your web page:
 
 ```
 <script type="text/javascript" src="TextHighlighter.min.js"></script>
 ```
+
+OR
+
+```
+<script type="text/javascript" src="http://resource.download.wjec.co.uk.s3-eu-west-1.amazonaws.com/edres/lib/texthighlighter/1.3.0/TextHighlighter.min.js"></script>
+```
+
 
 And use it!
 
